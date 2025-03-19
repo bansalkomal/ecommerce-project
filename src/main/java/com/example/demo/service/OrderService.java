@@ -47,7 +47,7 @@ public class OrderService {
                 throw new RuntimeException("Not enough stock for product: " + product.getName());
             }
 
-            OrderItem orderItem = new OrderItem(order, product, product.getName(), itemDTO.getQuantity(), product.getPrice());
+            OrderItem orderItem = new OrderItem(order, product, itemDTO.getQuantity(), product.getPrice());
             order.addOrderItem(orderItem);
 
             // Decrease product quantity

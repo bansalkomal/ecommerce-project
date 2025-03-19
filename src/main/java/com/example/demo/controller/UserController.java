@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ApiResponse;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestParam String username, @RequestParam String password) {
-        User user = userService.loginUser(username, password);
+    public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String password) {
+        User user = userService.loginUser(email, password);
+//        if (user != null) {
+//            return ResponseEntity.ok(user);
+//        }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials !!");
         if (user != null) {
-            return ResponseEntity.ok(user);
+            ApiResponse<User> response = new ApiResponse<>(HttpStatus.OK.value(), "Login successful", user);
+            return ResponseEntity.ok(response);
+        } else {
+            ApiResponse<Void> response = new ApiResponse<>(HttpStatus.UNAUTHORIZED.value(), "Invalid Credentials !!", null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials !!");
     }
 
     @GetMapping("/{id}")

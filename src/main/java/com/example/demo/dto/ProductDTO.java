@@ -12,13 +12,19 @@ public class ProductDTO {
 
     private Integer stock;
 
-    private String category;
+//    private String category;
 
     private String brand;
 
     private String imageUrl;
 
     private String color;
+
+    private String size;
+
+    private String productCode;
+
+    private Long subCategoryItemId;
 
     public Long getId() {
         return id;
@@ -60,13 +66,13 @@ public class ProductDTO {
         this.stock = stock;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
+//    public String getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(String category) {
+//        this.category = category;
+//    }
 
     public String getBrand() {
         return brand;
@@ -90,5 +96,29 @@ public class ProductDTO {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public Long getSubCategoryItemId() {
+        return subCategoryItemId;
+    }
+
+    public void setSubCategoryItemId(Long subCategoryItemId) {
+        this.subCategoryItemId = subCategoryItemId;
     }
 }

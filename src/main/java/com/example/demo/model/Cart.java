@@ -1,34 +1,56 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "cart")
 public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    //@OneToOne
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name="coupon_discount")
+    private Double couponDiscount;
+
+    @Column(name="couponCode")
+    private String couponCode;
+
+    @Column(name="shipping_charge")
+    private Double shippingCharge;
+
+    @Column(name="final_price")
+    private Double finalPrice;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<CartItem> cartItems;
 
     public Cart() {}
 
-    public Cart(User user, Double totalPrice) {
-        this.user = user;
+    public Cart(Long userId, Double totalPrice, Double couponDiscount,
+                Double shippingCharge, Double finalPrice, String couponCode) {
+        this.userId = userId;
         this.totalPrice = totalPrice;
+        this.couponDiscount = couponDiscount;
+        this.shippingCharge = shippingCharge;
+        this.finalPrice = totalPrice - couponDiscount + shippingCharge;
+        this.couponCode = couponCode;
         this.cartItems = new ArrayList<>();
     }
 
@@ -37,35 +59,16 @@ public class Cart {
         cartItem.setCart(this);
     }
 
-    public Long getId() {
-        return id;
+    public void removeCartItem(CartItem cartItem) {
+        cartItems.remove(cartItem);
+        cartItem.setCart(null);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    //    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

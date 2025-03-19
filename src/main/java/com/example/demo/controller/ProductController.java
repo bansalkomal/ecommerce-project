@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProductDTO;
+import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-
     @Autowired
     private ProductService productService;
 
@@ -27,19 +28,26 @@ public class ProductController {
     }
 
     @GetMapping("/filter")
-    public List<Product> filterProducts(@RequestParam String category, @RequestParam String brand) {
-        return productService.filterProducts(category, brand);
+    public List<Product> filterProducts(
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) String size,
+            @RequestParam(required = false) Long subCategoryItemId
+    ) {
+        return productService.filterProducts(minPrice, maxPrice, brand, color, size, subCategoryItemId);
     }
 
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.addProduct(product), HttpStatus.CREATED);
+    public ResponseEntity<Product> addProduct(@RequestBody ProductDTO productDTO) {
+        return new ResponseEntity<>(productService.saveOrUpdateProduct(productDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    @GetMapping("/subcategory-item/{id}")
+    public ResponseEntity<List<Product>> getProducts(@RequestParam Long subCategoryItemId) {
+        return ResponseEntity.ok(productService.getProductsBySubCategoryItemId(subCategoryItemId));
     }
 
     @GetMapping("/{id}")
@@ -53,19 +61,12 @@ public class ProductController {
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
         Product existingProduct = productService.getProductById(id);
         if (existingProduct != null) {
-            existingProduct.setName(product.getName());
-            existingProduct.setPrice(product.getPrice());
-            existingProduct.setStock(product.getStock());
-            existingProduct.setBrand(product.getBrand());
-            existingProduct.setDescription(product.getDescription());
-            existingProduct.setCategory(product.getCategory());
-            existingProduct.setColor(product.getColor());
-            existingProduct.setImageUrl(product.getImageUrl());
-            productService.updateProduct(existingProduct);
-            return ResponseEntity.ok(existingProduct);
+            productDTO.setId(id);
+            productDTO.setProductCode(existingProduct.getProductCode());
+            return ResponseEntity.ok(productService.saveOrUpdateProduct(productDTO));
         }
         return ResponseEntity.notFound().build();
     }
@@ -76,5 +77,26 @@ public class ProductController {
         productService.deleteProduct(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(productService.getAllCategories());
+    }
+
+    @GetMapping("/by-category-subcategory")
+    public List<Product> getProductsByCategoryAndSubCategory(
+            @RequestParam Long categoryId,
+            @RequestParam Long subCategoryId) {
+        return productService.getProductsByCategoryAndSubCategory(categoryId, subCategoryId);
+    }
+
+    @GetMapping("/by-category-subcategory-subcategory-item")
+    public List<Product> getProductsByCategoryAndSubCategoryAndSubCategoryItem(
+            @RequestParam Long categoryId,
+            @RequestParam Long subCategoryId,
+            @RequestParam Long subCategoryItemId) {
+        return productService.getProductsByCategoryAndSubCategoryAndSubCategoryItem(categoryId, subCategoryId, subCategoryItemId);
+    }
+
 }
 

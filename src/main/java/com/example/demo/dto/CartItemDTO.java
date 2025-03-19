@@ -1,19 +1,22 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CartItemDTO {
 
     private Long id;
-    private String name;
+    //    private String name;
     private Integer quantity;
-    private Double price;
-
+//    private Double price;
+    @JsonProperty("isAdd")
     private boolean isAdd;
 
-    public CartItemDTO(Long productId, String productName, Integer quantity, Double price) {
+    public CartItemDTO(Long productId, Integer quantity, boolean isAdd) {
         this.id = productId;
-        this.name = productName;
+//        this.name = productName;
         this.quantity = quantity;
-        this.price = price;
+//        this.price = price;
+        this.isAdd = isAdd;
     }
 
     public Long getId() {
@@ -24,13 +27,13 @@ public class CartItemDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public Integer getQuantity() {
         return quantity;
@@ -40,20 +43,19 @@ public class CartItemDTO {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+//    public Double getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(Double price) {
+//        this.price = price;
+//    }
 
     public boolean isAdd() {
         return isAdd;
     }
 
-    // Setter for isAdd
-    public void setAdd(boolean isAdd) {
-        this.isAdd = isAdd;
+    public void setAdd(boolean add) {
+        isAdd = add;
     }
 }

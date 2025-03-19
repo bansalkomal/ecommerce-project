@@ -3,7 +3,7 @@ package com.example.demo.dto;
 public class OrderItemDTO {
 
     private Long id;
-    private String name;
+//    private String name;
     private Integer quantity;
     private Double price;
 
@@ -15,13 +15,13 @@ public class OrderItemDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public Integer getQuantity() {
         return quantity;
