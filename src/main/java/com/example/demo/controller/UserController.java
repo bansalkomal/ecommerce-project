@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ApiResponse;
+import com.example.demo.dto.UserRegistrationDTO;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class UserController {
 
     @Transactional
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.registerUser(user), HttpStatus.CREATED);
+    public ResponseEntity<User> registerUser(@RequestBody UserRegistrationDTO dto) {
+        return new ResponseEntity<>(userService.registerUser(dto), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

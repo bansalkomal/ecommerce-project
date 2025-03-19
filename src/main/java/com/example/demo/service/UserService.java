@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.UserRegistrationDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,20 @@ public class UserService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User registerUser(UserRegistrationDTO dto) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        return userRepository.save(user);
+        User user = new User();
+        user.setUsername(dto.getUsername());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setEmail(dto.getEmail());
+        if(dto.getRole() == null) {
+            user.setRole("USER");
+        } else {
+            user.setRole(dto.getRole());
+        }
+        user.setMobileNumber(dto.getMobileNumber());
+        user.setGender(dto.getGender());
         return userRepository.save(user);
     }
 
