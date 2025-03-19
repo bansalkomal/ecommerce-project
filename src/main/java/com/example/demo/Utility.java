@@ -47,9 +47,6 @@ public class Utility {
 
     public void sendOrderEmail(String email, OrderResponseDTO orderResponse) throws MessagingException {
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
-        sender.setHost("smtp.gmail.com");
-        sender.setUsername("bansalkomal93@gmail.com");
-        sender.setPassword("jkcb qkdm khut tfsu");
         sender.setPort(587);
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
