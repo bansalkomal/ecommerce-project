@@ -134,7 +134,7 @@ public class WishlistService {
 
     public Wishlist getWishlistByUserId(Long userId) {
         return wishlistRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Wishlist not found for user ID: " + userId));
+                .orElse(null);
     }
 
 
