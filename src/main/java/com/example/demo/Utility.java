@@ -13,9 +13,9 @@ import java.util.Properties;
 @Service
 public class Utility {
 
-<<<<<<< Updated upstream
-    public static void sendEmail(String message) throws MessagingException {
-=======
+
+//    public static void sendEmail(String message) throws MessagingException {
+
 //    @Autowired
 //    private JavaMailSender mailSender;
 
@@ -24,12 +24,7 @@ public class Utility {
 
 //    public static void sendEmail(String message) throws MessagingException {
 //        JavaMailSenderImpl sender = new JavaMailSenderImpl();
-////        sender.setHost("smtp.sendgrid.net");
-////        sender.setUsername("apikey");
-////        sender.setPassword("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");
-////        sender.setPort(587);
-//
-//
+
 //        sender.setHost("smtp.gmail.com");
 //        sender.setUsername("bansalkomal93@gmail.com");
 //        sender.setPassword("jkcb qkdm khut tfsu");
@@ -51,7 +46,6 @@ public class Utility {
 
 
     public void sendOrderEmail(String email, OrderResponseDTO orderResponse) throws MessagingException {
->>>>>>> Stashed changes
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
         sender.setHost("smtp.gmail.com");
         sender.setUsername("bansalkomal93@gmail.com");

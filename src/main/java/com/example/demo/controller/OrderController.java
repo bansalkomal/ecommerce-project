@@ -6,7 +6,6 @@ import com.example.demo.dto.OrderItemResponseDTO;
 import com.example.demo.dto.OrderResponseDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.Order;
-import com.example.demo.model.OrderItem;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -44,11 +43,9 @@ public class OrderController {
     public ResponseEntity<OrderResponseDTO> createOrder(@PathVariable Long userId, @RequestBody List<OrderItemDTO> orderItemsDTO) throws MessagingException {
         List<Order> orders = new ArrayList<>();
         Order order = orderService.createOrder(userId, orderItemsDTO);
-<<<<<<< Updated upstream
-        String message = "Order placed successfully";
+//        String message = "Order placed successfully";
         //Utility.sendEmail(message);
-        return ResponseEntity.ok(order);
-=======
+//        return ResponseEntity.ok(order);
         orders.add(order);
         //String message = "Order placed successfully";
         OrderResponseDTO orderResponseDTO = mapOrdersToOrderResponseDTO(orders).get(0);
@@ -91,7 +88,6 @@ public class OrderController {
             dto.setOrderItems(itemDTOs);
             return dto;
         }).collect(Collectors.toList());
->>>>>>> Stashed changes
     }
 }
 
